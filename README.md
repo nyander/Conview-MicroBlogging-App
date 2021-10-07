@@ -1,0 +1,23 @@
+Concepts Covered:
+-Tailwind CSS
+-Laravel Mix
+-Authentication and Authorisation
+-Controllers
+-Routing
+-Route model binding
+-Database Migrations
+-Models
+-Soft Deleting
+-Laravel String helpers
+-Blade Templates
+-Blade components
+-Blade Directives
+-Eloquent (ORM)
+-Eloquen relationships
+-Model factories
+-Sending emails
+-Pagination
+-Eager loading (Performance)
+-Redirecting
+-CSRF protection
+-Method Spoofing
