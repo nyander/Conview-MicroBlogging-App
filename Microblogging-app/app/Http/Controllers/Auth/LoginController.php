@@ -20,6 +20,7 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
+
         // validaion
         $this->validate($request, [
             'email' => 'required|email',
@@ -27,7 +28,7 @@ class LoginController extends Controller
         ]);
 
         // Sign user in
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (!Auth::attempt($request->only('email', 'password'), $request->remember)) {
             return back()->with('status', 'invalid Login Details');
         };
 
