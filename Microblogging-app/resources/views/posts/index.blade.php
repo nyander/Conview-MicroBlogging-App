@@ -35,22 +35,35 @@
                     <p class="mb-2">{{$post->body}}</p>
 
                     {{-- Like Buttons --}}
-                    
-                    @if (!$post->likedBy(auth()->user()))
-                        <form action="{{route('posts.likes', $post)}}" method="post" class="mr-1">
+                    <div class="flex space-x-4">
+                        @auth
+                        @if (!$post->likedBy(auth()->user()))
+                            <form action="{{route('posts.likes', $post)}}" method="post" class="mr-1">
+                                @csrf
+                                <button type="submit" class="text-blue-500">Like</button>                            
+                                <span>{{$post->likes->count()}} {{Str::plural('like',$post->likes->count())}}</span>
+                            </form>                        
+                        @else
+                            <form action="{{route('posts.likes', $post)}}" method="post" class="mr-1">
+                                @csrf
+                                @method('DELETE')                                
+                                <button type="submit" class="text-blue-500">Unlike</button> 
+                                <span>{{$post->likes->count()}} {{Str::plural('like',$post->likes->count())}}</span>   
+                            </form>
+                        @endif 
+
+                        @can('delete', $post)
+                        <form action="{{route('posts.destroy', $post)}}" method="POST" class="text-right"	>
                             @csrf
-                            <button type="submit" class="text-blue-500">Like</button>                            
-                            <span>{{$post->likes->count()}} {{Str::plural('like',$post->likes->count())}}</span>
-                        </form>                        
-                    @else
-                        <form action="{{route('posts.likes', $post)}}" method="post" class="mr-1">
                             @method('DELETE')
-                            @csrf
-                            <button type="submit" class="text-blue-500">Unlike</button> 
-                            <span>{{$post->likes->count()}} {{Str::plural('like',$post->likes->count())}}</span>   
+                            <button type="submit" class="text-red-500 font-semibold	">Delete</button> 
                         </form>
-                    @endif 
-                    
+                        @endcan
+                        
+
+
+                    @endauth
+                    </div>
                 </div>
             @endforeach
 

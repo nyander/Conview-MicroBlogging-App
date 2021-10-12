@@ -8,14 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth']);
-    }
+
 
     public function index()
     {
-        $posts = Post::paginate(20);
+        $posts = Post::latest()->with('user', 'likes')->paginate(20);
         return view('posts.index', [
             'posts' => $posts
         ]);
@@ -31,6 +28,13 @@ class PostController extends Controller
             'body' => $request->body
         ]);
 
+        return back();
+    }
+
+    public function destroy(Post $post)
+    {
+        $this->authorize('delete', $post);
+        $post->delete();
         return back();
     }
 }
